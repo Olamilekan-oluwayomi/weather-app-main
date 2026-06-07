@@ -1,0 +1,66 @@
+:root {
+  // Neutrals
+  --clr-neutral-900: hsl(243, 96%, 9%);
+  --clr-neutral-800: hsl(243, 27%, 20%);
+  --clr-neutral-700: hsl(243, 23%, 24%);
+  --clr-neutral-600: hsl(243, 23%, 30%);
+  --clr-neutral-300: hsl(240, 6%, 70%);
+  --clr-neutral-200: hsl(250, 6%, 84%);
+  --clr-neutral-0: hsl(0, 0%, 100%);
+
+  // Accent
+  --clr-orange-500: hsl(28, 100%, 52%);
+  --clr-blue-500: hsl(233, 67%, 56%);
+  --clr-blue-700: hsl(248, 70%, 36%);
+
+  // Typography
+  --ff-base: "DM Sans", sans-serif;
+  --ff-display: "Bricolage Grotesque", sans-serif;
+
+  // Font weights
+  --fw-light: 300;
+  --fw-medium: 500;
+  --fw-semibold: 600;
+  --fw-bold: 700;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-size: 62.5%;
+}
+
+body {
+  font-family: var(--ff-base);
+  font-size: 1.8rem;
+  background-color: var(--clr-neutral-900);
+  color: var(--clr-neutral-0);
+  min-height: 100vh;
+}
+
+ul {
+  list-style: none;
+}
+
+img {
+  display: block;
+  max-width: 100%;
+}
+
+button {
+  cursor: pointer;
+  border: none;
+  background: none;
+  font-family: inherit;
+}
+
+// FIX: was commented out — hidden elements were showing
+[hidden] {
+  display: none !important;
+}

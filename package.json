@@ -1,0 +1,25 @@
+{
+  "name": "weather-app-main",
+  "version": "1.0.0",
+  "description": "![Design preview for the Weather app coding challenge](./preview.jpg)",
+  "main": "index.js",
+  "scripts": {
+    "watch": "sass --watch scss/styles.scss css/styles.css",
+    "build": "sass scss/styles.scss css/styles.css --style=compressed"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Olamilekan-oluwayomi/weather-app-main.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/Olamilekan-oluwayomi/weather-app-main/issues"
+  },
+  "homepage": "https://github.com/Olamilekan-oluwayomi/weather-app-main#readme",
+  "devDependencies": {
+    "sass": "^1.100.0"
+  }
+}

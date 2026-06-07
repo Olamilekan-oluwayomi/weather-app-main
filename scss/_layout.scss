@@ -1,0 +1,197 @@
+// Header
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 2.4rem 1.6rem;
+
+  &__logo img {
+    display: block;
+    height: auto;
+  }
+}
+
+// Main
+.main {
+  padding: 2.4rem 1.6rem;
+  display: flex;
+  flex-direction: column;
+  gap: 2.4rem;
+}
+
+// Search section
+.search-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2.4rem;
+
+  &__bar {
+    position: relative;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 1.2rem;
+  }
+}
+
+// Dashboard — single column on mobile
+.dashboard {
+  display: flex;
+  flex-direction: column;
+  gap: 2.4rem;
+
+  &__left {
+    display: flex;
+    flex-direction: column;
+    gap: 1.6rem;
+  }
+}
+
+// Metrics — 2 columns on mobile
+.metrics {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.2rem;
+}
+
+// Daily forecast — 3 columns on mobile
+.daily-forecast {
+  display: flex;
+  flex-direction: column;
+  gap: 1.6rem;
+
+  &__list {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.2rem;
+  }
+}
+
+// Footer
+.attribution {
+  text-align: center;
+  font-size: 1.2rem;
+  padding: 2.4rem;
+  color: var(--clr-neutral-300);
+
+  a {
+    color: var(--clr-blue-500);
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+}
+
+// ====== DESKTOP ======
+@media (min-width: 64em) {
+  .header {
+    padding: 2.4rem 4.8rem;
+  }
+
+  .main {
+    padding: 2.4rem 4.8rem;
+    gap: 3.2rem;
+  }
+
+  // Heading scales up on desktop
+  .search-section__heading {
+    font-size: 5.4rem;
+  }
+
+  // Search bar becomes a row on desktop
+  .search-section {
+    align-items: center;
+
+    &__bar {
+      flex-direction: row;
+      gap: 1.2rem;
+      max-width: 60rem;
+      width: 100%;
+
+      .btn {
+        width: auto;
+        white-space: nowrap;
+        flex-shrink: 0;
+      }
+    }
+  }
+
+  // Input wrapper stretches to fill row
+  .search-input-wrapper {
+    flex: 1;
+  }
+
+  .search-in-progress {
+    width: max-content;
+    margin: 0 auto;
+  }
+
+  // Dashboard becomes two columns
+  .dashboard {
+    flex-direction: row;
+    align-items: flex-start;
+    gap: 2.4rem;
+
+    &__left {
+      flex: 1;
+      min-width: 0;
+    }
+  }
+
+  // Hourly aside — fixed width on desktop
+  .hourly-forecast {
+    width: 32rem; // FIX: was 30rem, slightly wider to match design
+    flex-shrink: 0;
+  }
+
+  // Metrics — 4 columns on desktop
+  .metrics {
+    grid-template-columns: repeat(4, 1fr);
+  }
+
+  // Daily forecast — 7 columns on desktop
+  .daily-forecast {
+    &__list {
+      grid-template-columns: repeat(7, 1fr);
+    }
+  }
+
+  // Weather card switches to row layout on desktop
+  .weather-card {
+    display: flex;
+    flex-direction: column;
+    background-image: url("../assets/images/bg-today-large.svg");
+    min-height: 30rem;
+
+    &__loading {
+      min-height: 22rem;
+    }
+
+    &__content {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-between;
+      padding: 5rem 2.4rem;
+      min-height: 30rem; // FIX: match card min-height
+    }
+
+    &__temp-wrapper {
+      width: auto;
+      gap: 5.4rem;
+      justify-content: flex-end;
+      padding-bottom: 0;
+    }
+
+    &__city {
+      font-size: 2.4rem;
+    }
+
+    &__temp {
+      font-size: 8rem;
+      font-style: normal; // FIX: remove italic on desktop too
+    }
+  }
+}

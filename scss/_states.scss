@@ -1,0 +1,48 @@
+// ====== FOCUS STATES ======
+// Visible focus ring for keyboard navigation
+
+.btn:focus-visible,
+.units-dropdown__trigger:focus-visible,
+.units-dropdown__option:focus-visible,
+.units-dropdown__switch:focus-visible,
+.day-selector__trigger:focus-visible,
+.day-selector__menu li:focus-visible {
+  outline: 2px solid var(--clr-blue-500);
+  outline-offset: 2px;
+}
+
+.search-input:focus-visible {
+  outline: none; // outline goes on the wrapper instead
+}
+
+// Focus ring on the input wrapper when input is focused
+.search-input-wrapper:focus-within {
+  outline: 2px solid var(--clr-blue-500);
+  outline-offset: 2px;
+}
+
+// ====== UNITS DROPDOWN OPEN STATE ======
+// Chevron rotates when dropdown is open
+.units-dropdown__trigger[aria-expanded="true"] {
+  .units-dropdown__chevron {
+    transform: rotate(180deg);
+  }
+}
+
+.units-dropdown__chevron {
+  transition: transform 0.2s ease;
+}
+
+// ====== DAY SELECTOR OPEN STATE ======
+.day-selector__trigger[aria-expanded="true"] img {
+  transform: rotate(180deg);
+}
+
+.day-selector__trigger img {
+  transition: transform 0.2s ease;
+}
+
+// ====== SEARCH INPUT ACTIVE/FILLED STATE ======
+.search-input-wrapper:focus-within {
+  background-color: var(--clr-neutral-700);
+}

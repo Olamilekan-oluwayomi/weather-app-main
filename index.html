@@ -22,8 +22,7 @@
     <!-- ====== HEADER / NAVBAR ====== -->
     <header class="header">
       <div class="header__logo">
-        <img src="./assets/images/logo.svg" alt="" aria-hidden="true" />
-        <span>Weather Now</span>
+        <img src="./assets/images/logo.svg" alt="Weather Now" />
       </div>
 
       <!-- Units dropdown -->
@@ -35,14 +34,10 @@
           aria-expanded="false"
           aria-controls="units-menu"
         >
-          <img
-            src="./assets/images/icon-settings.svg"
-            alt=""
-            aria-hidden="true"
-          />
+          <img src="./assets/images/icon-units.svg" alt="" aria-hidden="true" />
           <span>Units</span>
           <img
-            src="./assets/images/icon-chevron-down.svg"
+            src="./assets/images/icon-dropdown.svg"
             alt=""
             aria-hidden="true"
             class="units-dropdown__chevron"
@@ -71,7 +66,7 @@
                 >
                   Celsius (°C)
                   <img
-                    src="./assets/images/icon-check.svg"
+                    src="./assets/images/icon-checkmark.svg"
                     alt=""
                     aria-hidden="true"
                     class="units-dropdown__check"
@@ -105,7 +100,7 @@
                 >
                   km/h
                   <img
-                    src="./assets/images/icon-check.svg"
+                    src="./assets/images/icon-checkmark.svg"
                     alt=""
                     aria-hidden="true"
                     class="units-dropdown__check"
@@ -139,7 +134,7 @@
                 >
                   Millimeters (mm)
                   <img
-                    src="./assets/images/icon-check.svg"
+                    src="./assets/images/icon-checkmark.svg"
                     alt=""
                     aria-hidden="true"
                     class="units-dropdown__check"
@@ -206,7 +201,7 @@
           </ul>
         </form>
 
-        <!-- Search in progress state (shown inside search bar area) -->
+        <!-- Search in progress state -->
         <div
           class="search-in-progress"
           id="search-in-progress"
@@ -214,7 +209,7 @@
           aria-live="polite"
         >
           <img
-            src="./assets/images/icon-spinner.svg"
+            src="./assets/images/icon-loading.svg"
             alt=""
             aria-hidden="true"
           />
@@ -249,7 +244,6 @@
       </div>
 
       <!-- ====== WEATHER DASHBOARD ====== -->
-      <!-- Hidden until data loads; loading state uses skeleton UI inside -->
       <div class="dashboard" id="dashboard" hidden>
         <!-- Left column -->
         <div class="dashboard__left">
@@ -272,12 +266,8 @@
             <!-- Loaded state -->
             <div class="weather-card__content" id="weather-card-content" hidden>
               <div class="weather-card__location">
-                <p class="weather-card__city" id="current-city">
-                  <!-- e.g. Berlin, Germany -->
-                </p>
-                <p class="weather-card__date" id="current-date">
-                  <!-- e.g. Tuesday, Aug 5, 2025 -->
-                </p>
+                <p class="weather-card__city" id="current-city"></p>
+                <p class="weather-card__date" id="current-date"></p>
               </div>
               <div class="weather-card__temp-wrapper">
                 <img
@@ -286,9 +276,7 @@
                   src=""
                   alt=""
                 />
-                <p class="weather-card__temp" id="current-temp">
-                  <!-- e.g. 20° -->
-                </p>
+                <p class="weather-card__temp" id="current-temp"></p>
               </div>
             </div>
           </div>
@@ -350,7 +338,7 @@
               >
                 <span id="selected-day-label">Tuesday</span>
                 <img
-                  src="./assets/images/icon-chevron-down.svg"
+                  src="./assets/images/icon-dropdown.svg"
                   alt=""
                   aria-hidden="true"
                 />
