@@ -1,0 +1,400 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="32x32"
+      href="./assets/images/favicon-32x32.png"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,300;0,500;0,600;0,700;1,600&family=Bricolage+Grotesque:wght@700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./css/styles.css" />
+    <title>Frontend Mentor | Weather app</title>
+  </head>
+  <body>
+    <!-- ====== HEADER / NAVBAR ====== -->
+    <header class="header">
+      <div class="header__logo">
+        <img src="./assets/images/logo.svg" alt="" aria-hidden="true" />
+        <span>Weather Now</span>
+      </div>
+
+      <!-- Units dropdown -->
+      <div class="units-dropdown" id="units-dropdown">
+        <button
+          class="units-dropdown__trigger"
+          id="units-trigger"
+          aria-haspopup="true"
+          aria-expanded="false"
+          aria-controls="units-menu"
+        >
+          <img
+            src="./assets/images/icon-settings.svg"
+            alt=""
+            aria-hidden="true"
+          />
+          <span>Units</span>
+          <img
+            src="./assets/images/icon-chevron-down.svg"
+            alt=""
+            aria-hidden="true"
+            class="units-dropdown__chevron"
+          />
+        </button>
+
+        <div class="units-dropdown__menu" id="units-menu" role="menu" hidden>
+          <button
+            class="units-dropdown__switch"
+            id="switch-units-btn"
+            role="menuitem"
+          >
+            Switch to Imperial
+          </button>
+
+          <div class="units-dropdown__group">
+            <p class="units-dropdown__label" id="temp-label">Temperature</p>
+            <ul role="group" aria-labelledby="temp-label">
+              <li>
+                <button
+                  class="units-dropdown__option is-selected"
+                  data-unit="temp"
+                  data-value="celsius"
+                  role="menuitemradio"
+                  aria-checked="true"
+                >
+                  Celsius (°C)
+                  <img
+                    src="./assets/images/icon-check.svg"
+                    alt=""
+                    aria-hidden="true"
+                    class="units-dropdown__check"
+                  />
+                </button>
+              </li>
+              <li>
+                <button
+                  class="units-dropdown__option"
+                  data-unit="temp"
+                  data-value="fahrenheit"
+                  role="menuitemradio"
+                  aria-checked="false"
+                >
+                  Fahrenheit (°F)
+                </button>
+              </li>
+            </ul>
+          </div>
+
+          <div class="units-dropdown__group">
+            <p class="units-dropdown__label" id="wind-label">Wind Speed</p>
+            <ul role="group" aria-labelledby="wind-label">
+              <li>
+                <button
+                  class="units-dropdown__option is-selected"
+                  data-unit="wind"
+                  data-value="kmh"
+                  role="menuitemradio"
+                  aria-checked="true"
+                >
+                  km/h
+                  <img
+                    src="./assets/images/icon-check.svg"
+                    alt=""
+                    aria-hidden="true"
+                    class="units-dropdown__check"
+                  />
+                </button>
+              </li>
+              <li>
+                <button
+                  class="units-dropdown__option"
+                  data-unit="wind"
+                  data-value="mph"
+                  role="menuitemradio"
+                  aria-checked="false"
+                >
+                  mph
+                </button>
+              </li>
+            </ul>
+          </div>
+
+          <div class="units-dropdown__group">
+            <p class="units-dropdown__label" id="precip-label">Precipitation</p>
+            <ul role="group" aria-labelledby="precip-label">
+              <li>
+                <button
+                  class="units-dropdown__option is-selected"
+                  data-unit="precip"
+                  data-value="mm"
+                  role="menuitemradio"
+                  aria-checked="true"
+                >
+                  Millimeters (mm)
+                  <img
+                    src="./assets/images/icon-check.svg"
+                    alt=""
+                    aria-hidden="true"
+                    class="units-dropdown__check"
+                  />
+                </button>
+              </li>
+              <li>
+                <button
+                  class="units-dropdown__option"
+                  data-unit="precip"
+                  data-value="in"
+                  role="menuitemradio"
+                  aria-checked="false"
+                >
+                  Inches (in)
+                </button>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- ====== MAIN ====== -->
+    <main class="main">
+      <!-- Search section -->
+      <section class="search-section" aria-label="City search">
+        <h1 class="search-section__heading">How's the sky looking today?</h1>
+
+        <form role="search" class="search-section__bar">
+          <div class="search-input-wrapper">
+            <img
+              src="./assets/images/icon-search.svg"
+              alt=""
+              aria-hidden="true"
+              class="search-input-wrapper__icon"
+            />
+            <input
+              type="search"
+              class="search-input"
+              id="search-input"
+              placeholder="Search for a place..."
+              autocomplete="off"
+              aria-label="Search for a city"
+              aria-autocomplete="list"
+              aria-controls="search-suggestions"
+              aria-expanded="false"
+            />
+          </div>
+
+          <button type="submit" class="btn btn--primary" id="search-btn">
+            Search
+          </button>
+
+          <!-- Autocomplete suggestions dropdown -->
+          <ul
+            class="search-suggestions"
+            id="search-suggestions"
+            role="listbox"
+            aria-label="City suggestions"
+            hidden
+          >
+            <!-- JS renders: <li role="option" data-lat="..." data-lon="..." data-name="...">City Name</li> -->
+          </ul>
+        </form>
+
+        <!-- Search in progress state (shown inside search bar area) -->
+        <div
+          class="search-in-progress"
+          id="search-in-progress"
+          hidden
+          aria-live="polite"
+        >
+          <img
+            src="./assets/images/icon-spinner.svg"
+            alt=""
+            aria-hidden="true"
+          />
+          <span>Search in progress</span>
+        </div>
+      </section>
+
+      <!-- ====== APP STATES ====== -->
+
+      <!-- No results state -->
+      <p
+        class="state-no-results"
+        id="state-no-results"
+        hidden
+        aria-live="polite"
+      >
+        No search result found!
+      </p>
+
+      <!-- API error state -->
+      <div class="state-error" id="state-error" hidden aria-live="assertive">
+        <img src="./assets/images/icon-error.svg" alt="" aria-hidden="true" />
+        <h2>Something went wrong</h2>
+        <p>
+          We couldn't connect to the server (API error). Please try again in a
+          few moments.
+        </p>
+        <button class="btn btn--secondary" id="retry-btn">
+          <img src="./assets/images/icon-retry.svg" alt="" aria-hidden="true" />
+          Retry
+        </button>
+      </div>
+
+      <!-- ====== WEATHER DASHBOARD ====== -->
+      <!-- Hidden until data loads; loading state uses skeleton UI inside -->
+      <div class="dashboard" id="dashboard" hidden>
+        <!-- Left column -->
+        <div class="dashboard__left">
+          <!-- Current weather card -->
+          <div
+            class="weather-card"
+            id="weather-card"
+            aria-label="Current weather"
+          >
+            <!-- Loading state -->
+            <div
+              class="weather-card__loading"
+              id="weather-card-loading"
+              aria-label="Loading weather data"
+            >
+              <span class="dot-loader" aria-hidden="true"></span>
+              <p>Loading...</p>
+            </div>
+
+            <!-- Loaded state -->
+            <div class="weather-card__content" id="weather-card-content" hidden>
+              <div class="weather-card__location">
+                <p class="weather-card__city" id="current-city">
+                  <!-- e.g. Berlin, Germany -->
+                </p>
+                <p class="weather-card__date" id="current-date">
+                  <!-- e.g. Tuesday, Aug 5, 2025 -->
+                </p>
+              </div>
+              <div class="weather-card__temp-wrapper">
+                <img
+                  class="weather-card__icon"
+                  id="current-icon"
+                  src=""
+                  alt=""
+                />
+                <p class="weather-card__temp" id="current-temp">
+                  <!-- e.g. 20° -->
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Metrics row -->
+          <div class="metrics" aria-label="Weather metrics">
+            <div class="metric-card">
+              <p class="metric-card__label">Feels Like</p>
+              <p class="metric-card__value" id="feels-like">—</p>
+            </div>
+            <div class="metric-card">
+              <p class="metric-card__label">Humidity</p>
+              <p class="metric-card__value" id="humidity">—</p>
+            </div>
+            <div class="metric-card">
+              <p class="metric-card__label">Wind</p>
+              <p class="metric-card__value" id="wind">—</p>
+            </div>
+            <div class="metric-card">
+              <p class="metric-card__label">Precipitation</p>
+              <p class="metric-card__value" id="precipitation">—</p>
+            </div>
+          </div>
+
+          <!-- Daily forecast -->
+          <section class="daily-forecast" aria-label="7-day forecast">
+            <h2 class="daily-forecast__heading">Daily forecast</h2>
+            <ul
+              class="daily-forecast__list"
+              id="daily-forecast-list"
+              role="list"
+            >
+              <!-- JS renders 7 items:
+              <li class="daily-card">
+                <p class="daily-card__day">Tue</p>
+                <img class="daily-card__icon" src="..." alt="..." />
+                <p class="daily-card__high"><span class="sr-only">High: </span>20°</p>
+                <p class="daily-card__low"><span class="sr-only">Low: </span>14°</p>
+              </li>
+              -->
+            </ul>
+          </section>
+        </div>
+        <!-- /dashboard__left -->
+
+        <!-- Right column: Hourly forecast -->
+        <aside class="hourly-forecast" aria-label="Hourly forecast">
+          <div class="hourly-forecast__header">
+            <h2 class="hourly-forecast__heading">Hourly forecast</h2>
+
+            <!-- Day selector dropdown -->
+            <div class="day-selector" id="day-selector">
+              <button
+                class="day-selector__trigger"
+                id="day-selector-trigger"
+                aria-haspopup="listbox"
+                aria-expanded="false"
+                aria-controls="day-selector-menu"
+              >
+                <span id="selected-day-label">Tuesday</span>
+                <img
+                  src="./assets/images/icon-chevron-down.svg"
+                  alt=""
+                  aria-hidden="true"
+                />
+              </button>
+              <ul
+                class="day-selector__menu"
+                id="day-selector-menu"
+                role="listbox"
+                aria-label="Select day"
+                hidden
+              >
+                <!-- JS renders <li role="option" data-date="...">Monday</li> × 7 -->
+              </ul>
+            </div>
+          </div>
+
+          <ul
+            class="hourly-forecast__list"
+            id="hourly-forecast-list"
+            role="list"
+          >
+            <!-- JS renders items:
+            <li class="hourly-item">
+              <img class="hourly-item__icon" src="..." alt="..." />
+              <span class="hourly-item__time">3 PM</span>
+              <span class="hourly-item__temp">20°</span>
+            </li>
+            -->
+          </ul>
+        </aside>
+      </div>
+      <!-- /dashboard -->
+    </main>
+
+    <footer class="attribution">
+      Challenge by
+      <a
+        href="https://www.frontendmentor.io?ref=challenge"
+        target="_blank"
+        rel="noopener"
+        >Frontend Mentor</a
+      >. Coded by <a href="#">Lizzle</a>.
+    </footer>
+
+    <script src="./js/app.js"></script>
+  </body>
+</html>
