@@ -70,7 +70,7 @@ const selectedDayLabel = document.getElementById("selected-day-label");
 
 const toggleElement = function (element, show) {
   if (show) {
-    element.removeAttribute("hidden", "");
+    element.removeAttribute("hidden");
   } else {
     element.setAttribute("hidden", "");
   }
@@ -156,9 +156,13 @@ const getWeatherInfo = async function (lat, lon) {
 
     state.data = data;
 
-    console.log(data);
     showDashboard();
     showWeatherCardContent();
+    renderCurrentWeather();
+    renderMetrics();
+    renderDailyForecast();
+    renderHourlyForecast();
+    renderDaySelector();
   } catch (error) {
     showError();
   }
