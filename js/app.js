@@ -30,6 +30,7 @@ const searchInput = document.getElementById("search-input");
 const searchBtn = document.getElementById("search-btn");
 const searchSuggestions = document.getElementById("search-suggestions");
 const searchInProgress = document.getElementById("search-in-progress");
+const searchForm = document.querySelector(".search-section__bar");
 
 // App states
 const stateNoResults = document.getElementById("state-no-results");
@@ -320,3 +321,143 @@ const renderDailyForecast = function () {
   // Set once after loop — avoids DOM thrashing
   dailyForecastList.innerHTML = markUp;
 };
+
+const renderHourlyForecast = function () {
+  // ── Get the 24-hour window for the selected day ──────────
+  // Each day occupies 24 consecutive slots in the hourly arrays
+  const startIndex = state.currentDay * 24;
+  const endIndex = startIndex + 24;
+
+  const hourlyTimes = state.data.hourly.time.slice(startIndex, endIndex);
+  const hourlyTemps = state.data.hourly.temperature_2m.slice(
+    startIndex,
+    endIndex,
+  );
+  const hourlyCodes = state.data.hourly.weather_code.slice(
+    startIndex,
+    endIndex,
+  );
+
+  // ── Build markup for each hour ───────────────────────────
+  let markUp = "";
+
+  for (let i = 0; i < 24; i++) {
+    const rawTime = hourlyTimes[i];
+    const rawTemp = hourlyTemps[i];
+    const weatherCode = hourlyCodes[i];
+
+    // Format time string e.g. "2025-08-05T15:00" → "3 PM"
+    const formattedTime = new Date(rawTime).toLocaleTimeString("en-US", {
+      hour: "numeric",
+      hour12: true,
+    });
+
+    // Convert temperature if needed — raw value is always celsius
+    let tempValue = rawTemp;
+    if (state.currentUnits.temp === "fahrenheit") {
+      tempValue = (tempValue * 9) / 5 + 32;
+    }
+    const formattedTemp = Math.round(tempValue) + "°";
+
+    markUp += `
+      <li class="hourly-item">
+        <img class="hourly-item__icon"
+          src="${getWeatherIcon(weatherCode)}"
+          alt="${weatherCodeLookup[weatherCode]}" />
+        <span class="hourly-item__time">${formattedTime}</span>
+        <span class="hourly-item__temp">${formattedTemp}</span>
+      </li>`;
+  }
+
+  // ── Update DOM ───────────────────────────────────────────
+  // Set once after loop — avoids DOM thrashing
+  hourlyForecastList.innerHTML = markUp;
+};
+
+const renderDaySelector = function () {
+  let menuHtml = "";
+
+  // 1. Loop through the 7-day array
+  state.data.daily.time.forEach((isoDateString, index) => {
+    const dateObj = new Date(isoDateString);
+
+    // Get the full weekday name (e.g., "Monday")
+    const weekdayName = dateObj.toLocaleDateString("en-US", {
+      weekday: "long",
+    });
+
+    // 2. Build the <li> string using the exact template attributes needed
+    menuHtml += `
+      <li role="option" data-date="${isoDateString}" data-index="${index}">
+        ${weekdayName}
+      </li>
+    `;
+
+    // 3. Keep the trigger label updated with the currently active day's name
+    if (index === state.currentDay) {
+      selectedDayLabel.textContent = weekdayName;
+    }
+  });
+
+  // 4. Inject the generated items into the DOM menu list
+  daySelectorMenu.innerHTML = menuHtml;
+};
+
+const renderSearchSuggestions = function (results) {
+  let markUp = "";
+
+  results.forEach((element) => {
+    const cityName = element.name;
+    const countryName = element.country;
+    const lat = element.latitude;
+    const lon = element.longitude;
+
+    markUp += `
+    <li role="option" data-lat="${lat}" data-lon="${lon}" data-name="${cityName}, ${countryName}">
+    ${cityName}, ${countryName}
+  </li>`;
+  });
+
+  searchSuggestions.innerHTML = markUp;
+  toggleElement(searchSuggestions, true);
+};
+
+searchForm.addEventListener("submit", async function (e) {
+  e.preventDefault();
+
+  const inputValue = searchInput.value.trim();
+
+  if (inputValue === "") return;
+
+  showSearchInProgress();
+
+  const getInforResults = await getGeoInfo(inputValue);
+
+  toggleElement(searchInProgress, false);
+
+  if (!getInforResults) return;
+
+  renderSearchSuggestions(getInforResults);
+});
+
+searchSuggestions.addEventListener("click", function (event) {
+  // Find the closest <li> element relative to what was actually clicked
+  const clickedLi = event.target.closest("li");
+
+  //  Guard clause: If the user clicked inside the parent but NOT on an <li>, stop here
+  if (!clickedLi) return;
+
+  const lat = clickedLi.dataset.lat;
+  const lon = clickedLi.dataset.lon;
+  const name = clickedLi.dataset.name;
+
+  state.currentCity.name = name;
+  state.currentCity.lon = lon;
+  state.currentCity.lat = lat;
+
+  toggleElement(searchSuggestions, false);
+
+  searchInput.value = "";
+
+  getWeatherInfo(lat, lon);
+});
